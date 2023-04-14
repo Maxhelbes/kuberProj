@@ -1,0 +1,22 @@
+architecture: standalone
+
+auth:
+  enabled: true
+  sentinel: true
+  password: 1a6TOt0j92kv
+
+master:
+  livenessProbe:
+    enabled: true 
+  readinessProbe:
+    enabled: true 
+  persistence:
+    enabled: true
+    storageClass: yc-network-ssd
+
+sentinel:
+  enabled: false
+  automateClusterRecovery: true
+
+metrics:
+  enabled: false

@@ -1,0 +1,49 @@
+# architecture: replication
+architecture: replication
+
+auth: 
+  username: ctfd
+  database: ctfd
+  password: 1a6TOt0j92kv
+  rootPassword: 1a6TOt0j92kv
+  replicationPassword: 1a6TOt0j92kv
+  # existingSecret: mariadb-password
+
+primary:
+  name: master
+  startupProbe:
+    enabled: true
+  livenessProbe:
+    enabled: true
+  nodeSelector:
+    worker-num: first
+  persistence:
+    enabled: true
+    # existingClaim: mariadb-master-data
+    storageClass: csi-s3
+  pdb:
+    create: true
+
+secondary: 
+  name: slave
+  replicaCount: 1
+  startupProbe:
+    enabled: true
+  livenessProbe:
+    enabled: true
+  readinessProbe:
+    enabled: true
+  nodeSelector:
+    worker-num: second
+  persistence:
+    enabled: true
+    storageClass: csi-s3
+  pdb:
+    create: true
+
+volumePermissions:
+  enabled: true
+
+metrics:
+  enabled: true
+
